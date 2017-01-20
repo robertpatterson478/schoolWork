@@ -74,13 +74,31 @@ public final class Selector {
          r[u] = a[u];
       }
       Arrays.sort(r);
-      int index = k;
-      for (int i = 0; i < r.length - 1 && i < k - 1; i++) {
-         if (r[i] == r[i + 1]) {
-            index++;
+      int distinctValues = 1;
+      for (int i = 0; i < r.length - 1; i++) {
+         if (r[i] != r[i + 1]) {
+            distinctValues++;
          }
       }
-      return r[index - 1];
+      if (k > distinctValues) {
+         throw new IllegalArgumentException();
+      }
+      if (k == distinctValues) {
+         return max(a);
+      }
+      int bound = k;
+      int returnValue = 0;
+      for (int i = 0; i < r.length - 1; i++) {
+         if (i >= bound) {
+            break;
+         }
+         returnValue = r[i];
+         if (r[i] == r[i + 1]) {
+            bound++;
+         }
+      }
+
+      return returnValue;
    }
 
    /**
@@ -93,20 +111,41 @@ public final class Selector {
    public static int kmax(int[] a, int k) {
       if (a == null || a.length == 0 || k > a.length || k < 1) {
          throw new IllegalArgumentException();
-
+      }
+      int[] l = new int[a.length];
+      for (int u = 0; u < a.length; u++) {
+         l[u] = a[u];
+      }
+      Arrays.sort(l);
+      int distinctValues = 1;
+      for (int i = 0; i < l.length - 1; i++) {
+         if (l[i] != l[i + 1]) {
+            distinctValues++;
+         }
       }
       int[] r = new int[a.length];
       for (int u = 0; u < a.length; u++) {
-         r[u] = a[u];
+         r[u] = l[a.length - 1 - u];
       }
-      Arrays.sort(r);
-      int index = k;
-      for (int i = 0; i < r.length - 1 && i < k - 1; i++) {
+      if (k > distinctValues) {
+         throw new IllegalArgumentException();
+      }
+      if (k == distinctValues) {
+         return min(a);
+      }
+      int bound = k;
+      int returnValue = 0;
+      for (int i = 0; i < r.length - 1; i++) {
+         if (i >= bound) {
+            break;
+         }
+         returnValue = r[i];
          if (r[i] == r[i + 1]) {
-            index++;
+            bound++;
          }
       }
-      return r[r.length - index];
+
+      return returnValue;
    }
 
    /**
@@ -161,7 +200,9 @@ public final class Selector {
          if (a[i] < value) {
             value = a[i];
          }
-
+      }
+      if (value < key) {
+         throw new IllegalArgumentException();
       }
       return value;
    }
@@ -186,7 +227,9 @@ public final class Selector {
          if (a[i] > value) {
             value = a[i];
          }
-
+      }
+      if (value > key) {
+         throw new IllegalArgumentException();
       }
       return value;
    }
