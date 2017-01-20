@@ -68,20 +68,23 @@ public final class Selector {
 	public static int kmin(int[] a, int k) {
 		if (a == null || a.length == 0) {
 			throw new IllegalArgumentException();
-
 		}
-		int currentMin = 0;
-		int temp = a[0];
-		for (int l = 0; l < k; l++) {
-			for (int i = 0; i < a.length; i++) {
-				if (a[i] < temp && temp != currentMin) {
-					temp = a[i];
+		int absMin = min(a);
+		int value = absMin;
+		int startingMin = a[2];
+		int localMin = value;
+		for(int l = 0; l < k; l++){
+			for(int i = 0; i < a.length; i++){
+				if(a[i] < startingMin && a[i] > localMin){
+					localMin = a[i];
 				}
-
+				
+				
 			}
-			currentMin = temp;
+			
 		}
-		return temp;
+		value = localMin;
+		return value;
 	}
 
 	/**
@@ -121,7 +124,25 @@ public final class Selector {
 	 * zero length. The array a is not changed by this method.
 	 */
 	public static int[] range(int[] a, int low, int high) {
-		return null;
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int arrayLength = 0;
+		for(int i = 0; i < a.length; i++){
+			if(a[i] >= low && a[i] <= high){
+				arrayLength++;
+			}
+		}
+		int[] value = new int[arrayLength];
+		int index = 0;
+		for(int i = 0; i < a.length; i++){
+			if(a[i] >= low && a[i] <= high){
+				value[index++] = a[i];
+				
+			}
+		}
+		return value;
 	}
 
 	/**
@@ -132,7 +153,21 @@ public final class Selector {
 	 * method.
 	 */
 	public static int ceiling(int[] a, int key) {
-		return -99;
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int value = max(a);
+		for(int i = 0; i < a.length; i++){
+			if(a[i] < key){
+				continue;
+			}
+			if(a[i] < value){
+				value = a[i];
+			}
+		
+		}
+		return value;
 	}
 
 	/**
@@ -143,7 +178,22 @@ public final class Selector {
 	 * method.
 	 */
 	public static int floor(int[] a, int key) {
-		return -99;
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int value = min(a);
+		for(int i = 0; i < a.length; i++){
+			if(a[i] > key){
+				continue;
+			}
+			if(a[i] > value){
+				value = a[i];
+			}
+		
+		}
+		return value;
 	}
+
 
 }

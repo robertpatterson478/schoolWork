@@ -1,0 +1,172 @@
+import java.util.Arrays;
+
+/**
+ * Defines a library of selection methods on arrays of ints.
+ *
+ * @author Robert Patterson (rlp0035@tigermail.auburn.edu)
+ * @author Dean Hendrix (dh@auburn.edu)
+ * @version 2017-01-19
+ *
+ */
+public final class Selector {
+
+	/**
+	 * Can't instantiate this class.
+	 *
+	 * D O N O T C H A N G E T H I S C O N S T R U C T O R
+	 *
+	 */
+	private Selector() {
+	}
+
+	/**
+	 * Selects the minimum value from the array a. This method throws
+	 * IllegalArgumentException if a is null or has zero length. The array a is
+	 * not changed by this method.
+	 */
+	public static int min(int[] a) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int temp = a[0];
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] < temp) {
+				temp = a[i];
+			}
+		}
+		return temp;
+
+	}
+
+	/**
+	 * Selects the maximum value from the array a. This method throws
+	 * IllegalArgumentException if a is null or has zero length. The array a is
+	 * not changed by this method.
+	 */
+	public static int max(int[] a) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int temp = a[0];
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] > temp) {
+				temp = a[i];
+			}
+		}
+		return temp;
+	}
+
+	/**
+	 * Selects the kth minimum value from the array a. This method throws
+	 * IllegalArgumentException if a is null, has zero length, or if there is no
+	 * kth minimum value. Note that there is no kth minimum value if k < 1, k >
+	 * a.length, or if k is larger than the number of distinct values in the
+	 * array. The array a is not changed by this method.
+	 */
+	public static int kmin(int[] a, int k) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int currentMin = 0;
+		int temp = min(a);
+		int start = 0;
+		for(int e = 0;e < a.length; e++){
+			if(a[e] != temp){
+				temp = a[e];
+				start = e;
+				break;
+			}
+		}
+		for (int l = 0; l < k; l++) {
+			currentMin = temp;
+			temp = a[start];
+			for (int i = 0; i < a.length; i++) {
+				if (a[i] < temp && a[i] > currentMin) {
+					temp = a[i];
+				}
+			
+			}
+			
+			
+		}
+		return temp;
+	}
+
+	/**
+	 * Selects the kth maximum value from the array a. This method throws
+	 * IllegalArgumentException if a is null, has zero length, or if there is no
+	 * kth maximum value. Note that there is no kth maximum value if k < 1, k >
+	 * a.length, or if k is larger than the number of distinct values in the
+	 * array. The array a is not changed by this method.
+	 */
+	public static int kmax(int[] a, int k) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		int currentMax = 0;
+		int temp = a[0];
+		for (int l = 0; l < k; l++) {
+			for (int i = 0; i < a.length; i++) {
+				if (a[i] > temp && temp != currentMax) {
+					temp = a[i];
+				}
+
+			}
+			currentMax = temp;
+		}
+		return temp;
+	}
+
+	/**
+	 * Returns an array containing all the values in a in the range [low..high];
+	 * that is, all the values that are greater than or equal to low and less
+	 * than or equal to high, including duplicate values. The length of the
+	 * returned array is the same as the number of values in the range
+	 * [low..high]. If there are no qualifying values, this method returns a
+	 * zero-length array. Note that low and high do not have to be actual values
+	 * in a. This method throws an IllegalArgumentException if a is null or has
+	 * zero length. The array a is not changed by this method.
+	 */
+	public static int[] range(int[] a, int low, int high) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		return new int[4];
+	}
+
+	/**
+	 * Returns the smallest value in a that is greater than or equal to the
+	 * given key. This method throws an IllegalArgumentException if a is null or
+	 * has zero length, or if there is no qualifying value. Note that key does
+	 * not have to be an actual value in a. The array a is not changed by this
+	 * method.
+	 */
+	public static int ceiling(int[] a, int key) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		return -99;
+	}
+
+	/**
+	 * Returns the largest value in a that is less than or equal to the given
+	 * key. This method throws an IllegalArgumentException if a is null or has
+	 * zero length, or if there is no qualifying value. Note that key does not
+	 * have to be an actual value in a. The array a is not changed by this
+	 * method.
+	 */
+	public static int floor(int[] a, int key) {
+		if (a == null || a.length == 0) {
+			throw new IllegalArgumentException();
+
+		}
+		return -99;
+	}
+
+}
